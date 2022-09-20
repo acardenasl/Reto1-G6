@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from turtle import title
 import config as cf
 import model
 import csv
@@ -47,50 +48,6 @@ def loadData(control, file_size='5pct'):
     estructura de datos
     """
     catalog = control['model']
-    #general = loadGeneral(catalog, file_size)
-    amazon = loadAmazon(catalog, file_size)
-    disney = loadDisney(catalog, file_size)
-    hulu = loadHulu(catalog, file_size)
-    netflix = loadNetflix(catalog, file_size)
-    movies = loadMovies(catalog, file_size)
-
-    return amazon, disney, hulu, netflix,movies
-
-def loadAmazon(catalog, file_size):
-    amazonFile = cf.data_dir + f'Streaming/amazon_prime_titles-utf8-{file_size}.csv'
-    input_file = csv.DictReader(open(amazonFile, encoding='utf-8'))
-    for amazonMovie in input_file:
-        model.addAmazonMovie(catalog, amazonMovie)
-
-    return model.amazonMovieSize(catalog), catalog['amazon']
-
-
-def loadDisney(catalog, file_size):
-    disneyFile = cf.data_dir + f'Streaming/disney_plus_titles-utf8-{file_size}.csv'
-    input_file = csv.DictReader(open(disneyFile, encoding='utf-8'))
-    for disneyMovie in input_file:
-        model.addDisneyMovie(catalog, disneyMovie)
-
-    return model.disneyMovieSize(catalog), catalog['disney']
-
-def loadHulu(catalog, file_size):
-    huluFile = cf.data_dir + f'Streaming/hulu_titles-utf8-{file_size}.csv'
-    input_file = csv.DictReader(open(huluFile, encoding='utf-8'))
-    for huluMovie in input_file:
-        model.addHuluMovie(catalog, huluMovie)
-
-    return model.huluMovieSize(catalog), catalog['hulu']
-
-def loadNetflix(catalog, file_size):
-    netflixFile = cf.data_dir + f'Streaming/netflix_titles-utf8-{file_size}.csv'
-    input_file = csv.DictReader(open(netflixFile, encoding='utf-8'))
-    for netflixMovie in input_file:
-        model.addNetflixMovie(catalog, netflixMovie)
-
-    return model.netflixMovieSize(catalog), catalog['netflix']
-
-def loadMovies(catalog, file_size):
-
     generalFileAmazon = cf.data_dir + f'Streaming/amazon_prime_titles-utf8-{file_size}.csv'
     generalFileDisney = cf.data_dir + f'Streaming/disney_plus_titles-utf8-{file_size}.csv'
     generalFileHulu = cf.data_dir + f'Streaming/hulu_titles-utf8-{file_size}.csv'
@@ -100,16 +57,21 @@ def loadMovies(catalog, file_size):
     input_file_hulu = csv.DictReader(open(generalFileHulu, encoding='utf-8'))
     input_file_netflix = csv.DictReader(open(generalFileNetflix, encoding='utf-8'))
 
-    for generalMovie in input_file_amazon:
-        model.addMovies(catalog, generalMovie)
-    for generalMovie in input_file_disney:
-        model.addMovies(catalog, generalMovie)
-    for generalMovie in input_file_hulu:
-        model.addMovies(catalog, generalMovie)
-    for generalMovie in input_file_netflix:
-        model.addMovies(catalog, generalMovie)
+    for title in input_file_amazon:
+        model.addTitles(catalog, title)
+        model.addAmazon(catalog, title)
+    for title in input_file_disney:
+        model.addTitles(catalog, title)
+        model.addDisney(catalog, title)
+    for title in input_file_hulu:
+        model.addTitles(catalog, title)
+        model.addHulu(catalog, title)
+    for title in input_file_netflix:
+        model.addTitles(catalog, title)
+        model.addNetflix(catalog, title)
 
-    return model.moviesCatalogSize(catalog), catalog['movies']
+    return catalog
+
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo

@@ -49,74 +49,93 @@ def newCatalog(lt_type):
     y otra para las categorías. Retorna el catálogo inicializado.
     """
 
-    catalog = { 'general':None,
+    catalog = {
                 'amazon':None,
                 'disney':None,
                 'hulu':None,
                 'netflix':None,
                 'movies':None,
                 'series':None,
+                'general':None,
     }
 
     catalog['amazon'] = lt.newList(lt_type)
     catalog['disney'] = lt.newList(lt_type)
     catalog['hulu'] = lt.newList(lt_type)
     catalog['netflix'] = lt.newList(lt_type)
-    catalog['movies'] = lt.newList(lt_type)  
+    catalog['movies'] = lt.newList(lt_type)
+    catalog['series'] = lt.newList(lt_type)
+    catalog['general'] = lt.newList(lt_type)
 
     return catalog
 
 # Funciones para agregar informacion al catalogo
-def addAmazonMovie(catalog, amazonMovie):
-    lt.addLast(catalog['amazon'], amazonMovie)
 
+def addAmazon(catalog, amazon):
+    lt.addLast(catalog['amazon'], amazon)
+    lt.addLast(catalog['general'], amazon)
     return catalog
 
-
-def addDisneyMovie(catalog, disneyMovie):
-    lt.addLast(catalog['disney'], disneyMovie)
-
+def addDisney(catalog, disney):
+    lt.addLast(catalog['disney'], disney)
+    lt.addLast(catalog['general'], disney)
     return catalog
 
-
-def addHuluMovie(catalog, huluMovie):
-    lt.addLast(catalog['hulu'], huluMovie)
-
+def addHulu(catalog, hulu):
+    lt.addLast(catalog['hulu'], hulu)
+    lt.addLast(catalog['general'], hulu)
     return catalog
 
-
-def addNetflixMovie(catalog, netflixMovie):
-    lt.addLast(catalog['netflix'], netflixMovie)
-
+def addNetflix(catalog, netflix):
+    lt.addLast(catalog['netflix'], netflix)
+    lt.addLast(catalog['general'], netflix)
     return catalog
 
-def addMovies(catalog, Movies):
-    if Movies['type'] == 'Movie':
-        lt.addLast(catalog['movies'], Movies)
-
+def addTitles(catalog, title):
+    if title['type'] == 'Movie':
+        lt.addLast(catalog['movies'], title)
+    elif title['type'] == 'TV Show':
+        lt.addLast(catalog['series'], title)
     return catalog
 
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
-def amazonMovieSize(catalog):
+def amazonSize(catalog):
     return lt.size(catalog['amazon'])
 
-
-def disneyMovieSize(catalog):
+def disneySize(catalog):
     return lt.size(catalog['disney'])
 
-
-def huluMovieSize(catalog):
+def huluSize(catalog):
     return lt.size(catalog['hulu'])
 
-
-def netflixMovieSize(catalog):
+def netflixSize(catalog):
     return lt.size(catalog['netflix'])
+
+def seriesCatalogSize(catalog):
+    return lt.size(catalog['series'])
 
 def moviesCatalogSize(catalog):
     return lt.size(catalog['movies'])
-# Funciones utilizadas para comparar elementos dentro de una lista
 
+def GeneralCatalogSize (catalog):
+    return lt.size(catalog['general'])
+
+# Funciones utilizadas para comparar elementos dentro de una lista
+"""
+def creacion_de_lista_de_genero_por_parametro (catalog['general'], genre): #4
+    lista_de_genero_por_parametro = lt.newList("ARRAY_LIST")
+    for i in lt.iterator(catalog['general']):
+        if i["listed_in"] == genre:
+            lt.addLast(lista_de_genero_por_parametro, i)
+    return lista_de_genero_por_parametro
+"""
+
+"""
 # Funciones de ordenamiento
+lista_de_un_genero=creacion_de_lista_de_genero_por_parametro
+def ordenar_lista_de_genero_por_parametro (lista_de_un_genero): #4
+    for x in range(0,len(lista_de_un_genero)):
+        """

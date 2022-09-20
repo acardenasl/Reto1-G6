@@ -25,7 +25,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
-from tabulate import tabulate
+from tabulate import tabulate as tab
 
 
 """
@@ -52,7 +52,7 @@ def loadData(control, file_size='5pct'):
     """
     Solicita al controlador que cargue los datos en el modelo
     """
-    amazon, disney, hulu, netflix, movies = controller.loadData(control, file_size)
+    amazon, disney, hulu, netflix, movies, series = controller.loadData(control, file_size)
     
     amazon_size = amazon[0]
     amazon_data = amazon[1]
@@ -69,8 +69,10 @@ def loadData(control, file_size='5pct'):
     movies_size = movies[0]
     movies_data = movies[1]
 
-    return amazon_size, amazon_data, disney_size, disney_data, hulu_size, hulu_data, netflix_size, netflix_data, movies_size, movies_data
+    series_size = series[0]
+    series_data = series[1]
 
+    return amazon_size, amazon_data, disney_size, disney_data, hulu_size, hulu_data, netflix_size, netflix_data, movies_size, movies_data, series_size, series_data,
 
 catalog = None
 
@@ -84,12 +86,12 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        amz_size, amz_data, dny_size, dny_data, hlu_size, hlu_data, nfx_size, nfx_data,movies_size,movies_data = loadData(control)
-        print(tabulate({'Servicio de streaming':['Amazon Prime','Disney Plus','Hulu','Netflix'], \
-            'Contenido total':[amz_size, dny_size, hlu_size, nfx_size]}, headers='keys', tablefmt='fancy_grid'))
-
+        catalog = controller.loadData(control)
+        
+        #print(tab({'Servicio de streaming':['Amazon Prime','Disney Plus','Hulu','Netflix'], \
+         #   'Contenido total':[amz_size, dny_size, hlu_size, nfx_size]}, headers='keys', tablefmt='fancy_grid'))
         # implementar funcion para mostrar 3 primeros y 3 ultimos
-
+        """
         #Amazon
         amazonFirst1 = lt.getElement(amz_data, 1)
         amazonFirst2 = lt.getElement(amz_data, 2)
@@ -121,7 +123,8 @@ while True:
         netflixLast1 = lt.getElement(nfx_data, nfx_size-2)
         netflixLast2 = lt.getElement(nfx_data, nfx_size-1)
         netflixLast3 = lt.getElement(nfx_data, nfx_size)
-
+        """
+        """
         print(f'\nLas primeras y ultimas 3 peliculas y series de Amazon Prime son: {amazonFirst1}\n{amazonFirst2}\n{amazonFirst3}\n{amazonLast1}\n{amazonLast2}\n{amazonLast3}')
 
         print(f'\nLas primeras y ultimas 3 peliculas y series de Disney plus son: {disneyFirst1}\n{disneyFirst2}\n{disneyFirst3}\n{disneyLast1}\n{disneyLast2}\n{disneyLast3}')
@@ -129,10 +132,10 @@ while True:
         print(f'\nLas primeras y ultimas 3 peliculas y series de Hulu son: {huluFirst1}\n{huluFirst2}\n{huluFirst3}\n{huluLast1}\n{huluLast2}\n{huluLast3}')
 
         print(f'\nLas primeras 3 peliculas de Netflix son: {netflixFirst1}\n{netflixFirst2}\n{netflixFirst3}\n{netflixLast1}\n{netflixLast2}\n{netflixLast3}\n')
+        """
 
-    elif int(inputs[0]) == 2:
+    elif int(inputs[0]) == 3:#requerimiento 4
         pass
-
     else:
         sys.exit(0)
 sys.exit(0)
