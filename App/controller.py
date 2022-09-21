@@ -77,9 +77,11 @@ def loadData(control, file_size='5pct'):
     return catalog
 
 #Funciones de ordenamiento
-
+def AddGenre (catalog, genre):
+    return lt.addLast(catalog, genre)
 #datos ordenados por año y titulo
-
+def SortCatalogTitle(catalog):
+    return model.SortedCatalogGeneral(catalog["general"]["title"])
 
 #Funciones de consulta sobre el catálogo
 
@@ -97,3 +99,23 @@ def sortTopGeneros(catalog):
 
 def cmpByTotal(total1, total2):
     return(total1["total"] > total2["total"])
+
+
+#requerimento 1
+ 
+def period_fechas(lis_o, fechasI, fechaF):
+ 
+   return (model.period_fechas(lis_o, fechasI, fechaF))
+  
+   #model.period_fechas(lis_o, fechasI, fechaF)
+   #print(model.period_fechas(lis_o, fechasI, fechaF))
+ 
+ 
+ 
+ 
+#requerimento 3
+ 
+ 
+def lis_ac(lis_o, actorP):
+ 
+   return model.lis_ac(lis_o, actorP)

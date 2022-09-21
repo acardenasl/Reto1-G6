@@ -99,6 +99,7 @@ def addTitles(catalog, title):
     return catalog
 
 
+
 # Funciones para creacion de datos
 
 # Funciones de consulta
@@ -124,18 +125,23 @@ def GeneralCatalogSize (catalog):
     return lt.size(catalog['general'])
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+def SortedCatalogGeneral (titles):
+    sorted_list = ms.sort(titles, cmpCatalogGneral)
+    return sorted_list
+
 
 # Funciones de ordenamiento
 
     #organizar por merge elementos por rango de años
+def cmpCatalogGneral (p1, p2):
+    return (int(p1['title']) < int(p2['title']))
 
 
 def listarTopGeneros(catalog):
     generostop={}
-
     #Buscador top generos para amazon
-    for i in range(1, lt.size(catalog["amazon"])):
-        pelicula=lt.getElement(catalog["amazon"], i)
+    for i in range(1, lt.size(catalog["general"])):
+        pelicula=lt.getElement(catalog["general"], i)
         generos=pelicula["listed_in"].split(",")
         for x in generos:
             if not x in generostop:
@@ -145,44 +151,106 @@ def listarTopGeneros(catalog):
                 generostop[x]["movies"]+=1
             if pelicula["type"]=="TV Show":
                 generostop[x]["TV_shows"]+=1
-
-    #Buscador top generos para disney
-    for i in range(1, lt.size(catalog["disney"])):
-        pelicula=lt.getElement(catalog["disney"], i)
-        generos=pelicula["listed_in"].split(",")
-        for x in generos:
-            if not x in generostop:
-                generostop[x] = {"nombre":x,"total":0, "movies": 0, "TV_shows":0}
-            generostop[x]["total"]+=1
-            if pelicula["type"]=="Movie":
-                generostop[x]["movies"]+=1
-            if pelicula["type"]=="TV Show":
-                generostop[x]["TV_shows"]+=1
-
-    #Buscador top generos para hulu   
-    for i in range(1, lt.size(catalog["hulu"])):
-        pelicula=lt.getElement(catalog["hulu"], i)
-        generos=pelicula["listed_in"].split(",")
-        for x in generos:
-            if not x in generostop:
-                generostop[x] = {"nombre":x,"total":0, "movies": 0, "TV_shows":0}
-            generostop[x]["total"]+=1
-            if pelicula["type"]=="Movie":
-                generostop[x]["movies"]+=1
-            if pelicula["type"]=="TV Show":
-                generostop[x]["TV_shows"]+=1
-
-    #Buscador top generos para Netflix
-    for i in range(1, lt.size(catalog["netflix"])):
-        pelicula=lt.getElement(catalog["netflix"], i)
-        generos=pelicula["listed_in"].split(",")
-        for x in generos:
-            if not x in generostop:
-                generostop[x] = {"nombre":x,"total":0, "movies": 0, "TV_shows":0}
-            generostop[x]["total"]+=1
-            if pelicula["type"]=="Movie":
-                generostop[x]["movies"]+=1
-            if pelicula["type"]=="TV Show":
-                generostop[x]["TV_shows"]+=1
-
     return generostop
+
+
+
+
+def cmpMoviesByReleaseYear(movie1, movie2):
+   """
+   Devuelve verdadero (True) si el release_year de movie1 son menores que los
+   de movie2, en caso de que sean iguales tenga en cuenta el titulo y en caso de que
+   ambos criterios sean iguales tenga en cuenta la duración, de lo contrario devuelva
+   falso (False).
+   Args:
+   movie1: informacion de la primera pelicula que incluye sus valores 'release_year',
+   ‘title’ y ‘duration’
+   movie2: informacion de la segunda pelicula que incluye su valor 'release_year',
+   ‘title’ y ‘duration’
+   """
+   if int(movie1['release_year']) < int(movie2['release_year']):
+       return True
+   elif int(movie1['release_year']) == int(movie2['release_year']):
+       if movie1['title'] < movie2['title']:
+           return True
+       elif movie1['title'] == movie2['title']:
+           if movie1['duration'] < movie2['duration']:
+               return True
+           else:         
+               return False
+       else:
+           return False
+   else:
+       return False
+ 
+def sortMovies1(list):
+   sorted_list = qs.sort(list, cmpMoviesByReleaseYear)
+ 
+   return sorted_list
+ 
+ 
+def cmpMovieTV(ele1, ele2):
+   if ele1['title'] < ele2['title']:
+       return True
+   elif ele1['title'] == ele2['title']:
+       if int(ele1['release_year']) < int(ele2['release_year']):
+          return True
+       elif int(ele1['release_year']) == int(ele2['release_year']):
+           if ele1['duration'] < ele2['duration']:
+               return True
+           else:         
+               return False
+       else:
+           return False
+   else:
+       return False
+ 
+def sortMovies2(list):
+   sorted_list = qs.sort(list, cmpMovieTV)
+ 
+   return sorted_list
+ 
+def lis_ac(sortMovies2, actorP):
+  
+   for i in lt.iterator(sortMovies1):
+       for a in i["cast"]:
+           if a == actorP:
+                answer=True
+ 
+ 
+ 
+ 
+def period_fechas(lis_o, fechasI, fechaF):
+  
+   a = sortMovies1(lis_o)
+ 
+ 
+   pos1 = 0
+   pos2 = 0
+   an1 = 0
+   an2 = 0
+   for i in lt.iterator(a):
+       if i["release_year"][0:4] == fechasI:
+           an1 = pos1
+           break
+       pos1 += 1
+ 
+   for i in lt.iterator(a):
+       if i["release_year"][0:4] == fechaF:
+           an2 = pos2
+           break
+       pos2 +=1
+  
+   SubList = lt.subList(a, an1+1, (an2-an1)+1)
+ 
+   return SubList
+ 
+ 
+def lis_ac(lis_o, actorP):
+ 
+   a = sortMovies2(lis_o)
+ 
+   for i in lt.iterator(a):
+       for x in i["cast"]:
+           if x == actorP:
+               return lt.subList(a, x)
