@@ -109,7 +109,7 @@ while True:
 
 
         #print(tab({'Servicio de streaming':['Amazon Prime','Disney Plus','Hulu','Netflix'], \
-         #   'Contenido total':[amz_size, dny_size, hlu_size, nfx_size]}, headers='keys', tablefmt='fancy_grid'))
+         #     'Contenido total':[amz_size, dny_size, hlu_size, nfx_size]}, headers='keys', tablefmt='fancy_grid'))
         # implementar funcion para mostrar 3 primeros y 3 ultimos
         """
         #Amazon

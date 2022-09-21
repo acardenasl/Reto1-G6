@@ -21,7 +21,7 @@
  """
 
 from operator import lt
-from DISClib.ADT import list as lt
+from DISClib.ADT import list as lit
 from turtle import title
 from DISClib.Algorithms.Sorting import mergesort as ms
 import config as cf
@@ -84,13 +84,12 @@ def loadData(control, file_size='5pct'):
 
 
 def sortTopGeneros(catalog):
-    SortList = lt.newList('ARRAY_LIST')
+    SortList = lit.newList('ARRAY_LIST')
     diccionario=model.listarTopGeneros(catalog)
     for x in diccionario:
         info=diccionario.get(x)
-        lt.addLast(SortList, info)
+        lit.addLast(SortList, info)
     ms.sort(SortList, cmpByTotal)
     return SortList
-
 def cmpByTotal(total1, total2):
     return(total1["total"] > total2["total"])
