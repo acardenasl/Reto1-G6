@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from gettext import Catalog
 from operator import lt
 from DISClib.ADT import list as lit
 from turtle import title
@@ -86,10 +87,13 @@ def loadData(control, file_size='5pct'):
 def sortTopGeneros(catalog):
     SortList = lit.newList('ARRAY_LIST')
     diccionario=model.listarTopGeneros(catalog)
+    print(diccionario)
     for x in diccionario:
         info=diccionario.get(x)
         lit.addLast(SortList, info)
     ms.sort(SortList, cmpByTotal)
     return SortList
+  
+
 def cmpByTotal(total1, total2):
     return(total1["total"] > total2["total"])
