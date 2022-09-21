@@ -26,6 +26,7 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 from tabulate import tabulate as tab
+from prettytable import PrettyTable
 
 
 """
