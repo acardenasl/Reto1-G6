@@ -124,18 +124,65 @@ def GeneralCatalogSize (catalog):
     return lt.size(catalog['general'])
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-"""
-def creacion_de_lista_de_genero_por_parametro (catalog['general'], genre): #4
-    lista_de_genero_por_parametro = lt.newList("ARRAY_LIST")
-    for i in lt.iterator(catalog['general']):
-        if i["listed_in"] == genre:
-            lt.addLast(lista_de_genero_por_parametro, i)
-    return lista_de_genero_por_parametro
-"""
 
-"""
 # Funciones de ordenamiento
-lista_de_un_genero=creacion_de_lista_de_genero_por_parametro
-def ordenar_lista_de_genero_por_parametro (lista_de_un_genero): #4
-    for x in range(0,len(lista_de_un_genero)):
-        """
+
+    #organizar por merge elementos por rango de años
+
+
+def listarTopGeneros(catalog):
+    generostop={}
+
+    #Buscador top generos para amazon
+    for i in range(1, lt.size(catalog["amazon"])):
+        pelicula=lt.getElement(catalog["amazon"], i)
+        generos=pelicula["listed_in"].split(",")
+        for x in generos:
+            if not x in generostop:
+                generostop[x] = {"nombre":x,"total":0, "movies": 0, "TV_shows":0}
+            generostop[x]["total"]+=1
+            if pelicula["type"]=="Movie":
+                generostop[x]["movies"]+=1
+            if pelicula["type"]=="TV Show":
+                generostop[x]["TV_shows"]+=1
+
+    #Buscador top generos para disney
+    for i in range(1, lt.size(catalog["disney"])):
+        pelicula=lt.getElement(catalog["disney"], i)
+        generos=pelicula["listed_in"].split(",")
+        for x in generos:
+            if not x in generostop:
+                generostop[x] = {"nombre":x,"total":0, "movies": 0, "TV_shows":0}
+            generostop[x]["total"]+=1
+            if pelicula["type"]=="Movie":
+                generostop[x]["movies"]+=1
+            if pelicula["type"]=="TV Show":
+                generostop[x]["TV_shows"]+=1
+
+    #Buscador top generos para hulu   
+    for i in range(1, lt.size(catalog["hulu"])):
+        pelicula=lt.getElement(catalog["hulu"], i)
+        generos=pelicula["listed_in"].split(",")
+        for x in generos:
+            if not x in generostop:
+                generostop[x] = {"nombre":x,"total":0, "movies": 0, "TV_shows":0}
+            generostop[x]["total"]+=1
+            if pelicula["type"]=="Movie":
+                generostop[x]["movies"]+=1
+            if pelicula["type"]=="TV Show":
+                generostop[x]["TV_shows"]+=1
+
+    #Buscador top generos para Netflix
+    for i in range(1, lt.size(catalog["netflix"])):
+        pelicula=lt.getElement(catalog["netflix"], i)
+        generos=pelicula["listed_in"].split(",")
+        for x in generos:
+            if not x in generostop:
+                generostop[x] = {"nombre":x,"total":0, "movies": 0, "TV_shows":0}
+            generostop[x]["total"]+=1
+            if pelicula["type"]=="Movie":
+                generostop[x]["movies"]+=1
+            if pelicula["type"]=="TV Show":
+                generostop[x]["TV_shows"]+=1
+
+    return generostop

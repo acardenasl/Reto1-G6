@@ -38,7 +38,11 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2-  Listar las películas estrenadas en un periodo de tiempo (G)")
+    print("3- : Encontrar contenido donde participa un actor (I)")
+    print("4-  Encontrar contenido por un género especifico (I)")
+    print("5- Listar el TOP (N) de los géneros con más contenido (G)")
+    print("6- Salir")
 
 def newController(lt_type):
     """
@@ -72,7 +76,7 @@ def loadData(control, file_size='5pct'):
     series_size = series[0]
     series_data = series[1]
 
-    return amazon_size, amazon_data, disney_size, disney_data, hulu_size, hulu_data, netflix_size, netflix_data, movies_size, movies_data, series_size, series_data,
+    return amazon_size, amazon_data, disney_size, disney_data, hulu_size, hulu_data, netflix_size, netflix_data, movies_size, movies_data, series_size, series_data
 
 catalog = None
 
@@ -81,13 +85,29 @@ control = newController('ARRAY_LIST')
 """
 Menu principal
 """
+def PrintRequ7(numTop):
+    conta=int(numTop)
+    numTopList=lt.newList()
+    Sortdict=controller.sortTopGeneros(control["model"])
+    for i in Sortdict["elements"]:
+        lt.addLast(numTopList, i)
+        print(i)
+        conta = conta - 1
+        if(conta==0):
+            break
+    print(numTopList)
+
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         catalog = controller.loadData(control)
-        
+    if int(inputs[0]) == 5:
+        top=input("Ingrese el numero TOP de generos a identificar: ")
+        PrintRequ7(top)
+
+
         #print(tab({'Servicio de streaming':['Amazon Prime','Disney Plus','Hulu','Netflix'], \
          #   'Contenido total':[amz_size, dny_size, hlu_size, nfx_size]}, headers='keys', tablefmt='fancy_grid'))
         # implementar funcion para mostrar 3 primeros y 3 ultimos
@@ -133,9 +153,6 @@ while True:
 
         print(f'\nLas primeras 3 peliculas de Netflix son: {netflixFirst1}\n{netflixFirst2}\n{netflixFirst3}\n{netflixLast1}\n{netflixLast2}\n{netflixLast3}\n')
         """
-
-    elif int(inputs[0]) == 3:#requerimiento 4
-        pass
     else:
         sys.exit(0)
 sys.exit(0)

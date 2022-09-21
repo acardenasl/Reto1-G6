@@ -20,7 +20,10 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from operator import lt
+from DISClib.ADT import list as lt
 from turtle import title
+from DISClib.Algorithms.Sorting import mergesort as ms
 import config as cf
 import model
 import csv
@@ -31,7 +34,7 @@ csv.field_size_limit(2147483647)
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
-# Inicialización del Catálogo de libros
+######## Inicialización del Catálogo de libros
 def newController(lt_type):
     """
     Crea una instancia del modelo
@@ -41,7 +44,7 @@ def newController(lt_type):
 
     return control
 
-# Funciones para la carga de datos
+########## Funciones para la carga de datos
 def loadData(control, file_size='5pct'):
     """
     carga los datos de los archivos y cargar los datos de la 
@@ -72,6 +75,22 @@ def loadData(control, file_size='5pct'):
 
     return catalog
 
-# Funciones de ordenamiento
+#Funciones de ordenamiento
 
-# Funciones de consulta sobre el catálogo
+#datos ordenados por año y titulo
+
+
+#Funciones de consulta sobre el catálogo
+
+
+def sortTopGeneros(catalog):
+    SortList = lt.newList('ARRAY_LIST')
+    diccionario=model.listarTopGeneros(catalog)
+    for x in diccionario:
+        info=diccionario.get(x)
+        lt.addLast(SortList, info)
+    ms.sort(SortList, cmpByTotal)
+    return SortList
+
+def cmpByTotal(total1, total2):
+    return(total1["total"] > total2["total"])
